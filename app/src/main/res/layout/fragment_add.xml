@@ -63,9 +63,28 @@
                 android:textOff="일회성"
                 android:checked="@={isFixChecked}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/therapist_name_textinput"
+                app:layout_constraintEnd_toStartOf="@id/monthly_dues_textinput"
+                app:layout_constraintTop_toTopOf="@id/monthly_dues_textinput"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/monthly_dues_textinput"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="월회비"
+                android:visibility="@{isFixChecked? View.VISIBLE : View.INVISIBLE}"
+                app:counterEnabled="true"
+                app:counterMaxLength="10"
+                app:errorEnabled="true"
+                app:placeholderText="있을때만"
+                app:helperTextEnabled="true"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/therapist_name_textinput"/>
+                app:layout_constraintStart_toStartOf="@id/cost_textinput"
+                app:layout_constraintEnd_toEndOf="@id/cost_textinput">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -80,27 +99,14 @@
                 app:helperTextEnabled="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toEndOf="@id/fix_check"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cost_textinput"
+                app:layout_constraintEnd_toStartOf="@id/cost_textinput">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={addViewModel.therapistName}"/>
             </com.google.android.material.textfield.TextInputLayout>
-<!--
-            <EditText
-                android:id="@+id/therapist_name_edit"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="최재민"
-                app:layout_constraintEnd_toStartOf="@id/fix_check"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" /> -->
-
-
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -116,64 +122,22 @@
                 app:errorEnabled="true"
                 app:placeholderText="ex) 40000"
                 app:helperTextEnabled="true"
-                app:layout_constraintEnd_toStartOf="@id/monthly_dues_textinput"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/therapist_name_textinput">
+                app:layout_constraintStart_toEndOf="@id/therapist_name_textinput"
+                app:layout_constraintTop_toBottomOf="@id/monthly_dues_textinput"
+                app:layout_constraintEnd_toEndOf="parent">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--
-            <EditText
-                android:id="@+id/cost_edit"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="50000"
-                app:layout_constraintEnd_toStartOf="@id/fix_check"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/therapist_name_edit"/> -->
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/monthly_dues_textinput"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="월회비"
-                android:visibility="@{isFixChecked? View.VISIBLE : View.INVISIBLE}"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
-                app:placeholderText="있을때만"
-                app:helperTextEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cost_textinput"
-                app:layout_constraintTop_toBottomOf="@id/therapist_name_textinput">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <!--
-            <EditText
-                android:id="@+id/monthly_dues_eidt"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                app:layout_constraintLeft_toRightOf="@id/cost_edit"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/therapist_name_edit"/>
--->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{isFixChecked? View.VISIBLE : View.GONE}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/monthly_dues_textinput">
+                app:layout_constraintTop_toBottomOf="@id/therapist_name_textinput">
 
                 <TextView
                     android:id="@+id/fixday_text"
@@ -276,7 +240,7 @@
                         android:id="@+id/mon_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.monStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/mon_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/mon_head_text" />
@@ -285,7 +249,7 @@
                         android:id="@+id/mon_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/mon_count_edit"
                         app:layout_constraintStart_toEndOf="@id/mon_start_time_button"/>
@@ -325,7 +289,7 @@
                         android:id="@+id/tue_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.tueStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tue_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/tue_head_text" />
@@ -334,7 +298,7 @@
                         android:id="@+id/tue_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tue_count_edit"
                         app:layout_constraintStart_toEndOf="@id/tue_start_time_button"/>
@@ -374,7 +338,7 @@
                         android:id="@+id/wed_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.wedStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/wed_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/wed_head_text" />
@@ -383,7 +347,7 @@
                         android:id="@+id/wed_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.wedEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/wed_count_edit"
                         app:layout_constraintStart_toEndOf="@id/wed_start_time_button"/>
@@ -423,7 +387,7 @@
                         android:id="@+id/thu_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.thuStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/thu_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/thu_head_text" />
@@ -432,7 +396,7 @@
                         android:id="@+id/thu_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.thuEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/thu_count_edit"
                         app:layout_constraintStart_toEndOf="@id/thu_start_time_button"/>
@@ -472,7 +436,7 @@
                         android:id="@+id/fri_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.friStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/fri_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/fri_head_text" />
@@ -481,7 +445,7 @@
                         android:id="@+id/fri_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.friEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/fri_count_edit"
                         app:layout_constraintStart_toEndOf="@id/fri_start_time_button"/>
@@ -521,7 +485,7 @@
                         android:id="@+id/sat_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="pm 16:00"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.satStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/sat_end_time_button"
                         app:layout_constraintStart_toEndOf="@id/sat_head_text" />
@@ -530,7 +494,7 @@
                         android:id="@+id/sat_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50분"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.satEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/sat_count_edit"
                         app:layout_constraintStart_toEndOf="@id/sat_start_time_button"/>
@@ -560,7 +524,7 @@
                 app:layout_constraintTop_toBottomOf="@id/cost_textinput">
 
                 <Button
-                    android:id="@+id/onetime_head_text"
+                    android:id="@+id/onetime_date_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2020-12-16"
@@ -573,16 +537,16 @@
                     android:id="@+id/onetime_start_time_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="pm 16:00"
+                    android:text="@{addViewModel.setButtonTime(addViewModel.onetimeStartCal)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/onetime_end_time_button"
-                    app:layout_constraintStart_toEndOf="@id/onetime_head_text" />
+                    app:layout_constraintStart_toEndOf="@id/onetime_date_button" />
 
                 <Button
                     android:id="@+id/onetime_end_time_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50분"
+                    android:text="@{addViewModel.setButtonTime(addViewModel.onetimeEndCal)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/onetime_count_edit"
                     app:layout_constraintStart_toEndOf="@id/onetime_start_time_button"/>

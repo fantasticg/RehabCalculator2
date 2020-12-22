@@ -16,14 +16,15 @@
 
 package com.example.rehabcalculator2.ui.add
 
-import android.view.View
-import androidx.databinding.Bindable
-import androidx.lifecycle.*
+import android.widget.Button
+import androidx.lifecycle.MutableLiveData
 import com.example.rehabcalculator2.ObservableViewModel
 import com.example.rehabcalculator2.database.OnetimeSchedule
 import com.example.rehabcalculator2.database.PeriodicSchedule
 import com.example.rehabcalculator2.database.PeriodicScheduleDatabaseDao
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * ViewModel for SleepQualityFragment.
@@ -37,11 +38,77 @@ class AddViewModel(
 
     val pdatabase = pdataSource
 
-    val test ="abcdef"
-
     val therapistName = MutableLiveData<String>()
 
+    var monStartCal: Calendar = Calendar.getInstance()
 
+    var monEndCal: Calendar = Calendar.getInstance()
+
+    var tueStartCal: Calendar = Calendar.getInstance()
+
+    var tueEndCal: Calendar = Calendar.getInstance()
+
+    var wedStartCal: Calendar = Calendar.getInstance()
+
+    var wedEndCal: Calendar = Calendar.getInstance()
+
+    var thuStartCal: Calendar = Calendar.getInstance()
+
+    var thuEndCal: Calendar = Calendar.getInstance()
+
+    var friStartCal: Calendar = Calendar.getInstance()
+
+    var friEndCal: Calendar = Calendar.getInstance()
+
+    var satStartCal: Calendar = Calendar.getInstance()
+
+    var satEndCal: Calendar = Calendar.getInstance()
+
+    var onetimeStartCal: Calendar = Calendar.getInstance()
+
+    var onetimeEndCal: Calendar = Calendar.getInstance()
+
+    init {
+        monStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        monStartCal.set(Calendar.MINUTE, 0)
+        monEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        monEndCal.set(Calendar.MINUTE, 50)
+
+        tueStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        tueStartCal.set(Calendar.MINUTE, 0)
+        tueEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        tueEndCal.set(Calendar.MINUTE, 50)
+
+        wedStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        wedStartCal.set(Calendar.MINUTE, 0)
+        wedEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        wedEndCal.set(Calendar.MINUTE, 50)
+
+        thuStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        thuStartCal.set(Calendar.MINUTE, 0)
+        thuEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        thuEndCal.set(Calendar.MINUTE, 50)
+
+        friStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        friStartCal.set(Calendar.MINUTE, 0)
+        friEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        friEndCal.set(Calendar.MINUTE, 50)
+
+        satStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        satStartCal.set(Calendar.MINUTE, 0)
+        satEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        satEndCal.set(Calendar.MINUTE, 50)
+
+        onetimeStartCal.set(Calendar.HOUR_OF_DAY, 16)
+        onetimeStartCal.set(Calendar.MINUTE, 0)
+        onetimeEndCal.set(Calendar.HOUR_OF_DAY, 16)
+        onetimeEndCal.set(Calendar.MINUTE, 50)
+
+    }
+
+    fun setButtonTime(cal : Calendar) : String {
+        return SimpleDateFormat("a h:mm").format(cal.time)
+    }
     /*
 
     /*
@@ -106,6 +173,7 @@ class AddViewModel(
         val onetime_s = OnetimeSchedule(1L, 2L, "a", 3L,4L, 45, 50000, 1)
         sdatabase.insert(onetime_s);
     }
+
 
 }
 
