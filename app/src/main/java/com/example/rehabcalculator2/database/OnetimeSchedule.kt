@@ -19,34 +19,30 @@ package com.example.rehabcalculator2.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity(tableName = "schedules_table")
 data class OnetimeSchedule(
 
         // 일회성) 치료사, 금액, 시작시간, 종료시간, 연강여부
-        @PrimaryKey(autoGenerate = true)
-        var databaseId: Long = 0L,                      // dbId
+    @PrimaryKey(autoGenerate = true)
+    var databaseId: Long = 0L,                      // dbId
 
-        @ColumnInfo(name = "therapist_id")              // 치료사번호
-        var therapistId : Long = 1,
+    @ColumnInfo(name = "therapist_id")              // 치료사번호
+    var therapistId: Long = 1,
 
-        @ColumnInfo(name = "therapist_name")            // 치료사 이름
-        var name: String = "a",
+    @ColumnInfo(name = "therapist_name")            // 치료사 이름
+    var name: String = "a",
 
-        @ColumnInfo(name = "date")                      //날짜
-        var dateLong: Long,
+    @ColumnInfo(name = "start_time")                //날짜 및 시작시간
+    var startTime: Long,
 
-        @ColumnInfo(name = "start_time")                //시작시간
-        var startTime: Long = 0,
+    @ColumnInfo(name = "end_time")                //종료시간
+    var endTime: Long,
 
-        @ColumnInfo(name = "treatment_time")            //치료단위시간
-        var treatmentTime: Int = 45,
+    @ColumnInfo(name = "price")
+    var price: Int,
 
-        @ColumnInfo(name = "price")
-        var price: Int,
-
-        @ColumnInfo(name = "number_of_consecutive_lectures")
-        var numberOfConsecutiveLectures: Int = 1        //연결치료여부
+    @ColumnInfo(name = "number_of_consecutive_lectures")
+    var numberOfConsecutiveLectures: Int = 1        //연결치료여부
 
 )

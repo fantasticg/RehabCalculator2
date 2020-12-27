@@ -44,526 +44,577 @@
             type="com.example.rehabcalculator2.ui.add.AddViewModel" />
     </data>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addcommon_constraint"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:fitsSystemWindows="true">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                style="?attr/catalogToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:collapsedTitleTextAppearance="?attr/textAppearanceHeadline6"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleGravity="bottom"
+                app:expandedTitleMarginBottom="56dp"
+                app:expandedTitleMarginStart="16dp"
+                app:expandedTitleTextAppearance="?attr/textAppearanceHeadline5"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="?attr/catalogToolbarWithCloseButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:title="Collapsing Title" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".sleepdetail.SleepDetailFragment">
-
-
-            <ToggleButton
-                android:id="@+id/fix_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOn="고정"
-                android:textOff="일회성"
-                android:checked="@={isFixChecked}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/monthly_dues_textinput"
-                app:layout_constraintTop_toTopOf="@id/monthly_dues_textinput"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/monthly_dues_textinput"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:hint="월회비"
-                android:visibility="@{isFixChecked? View.VISIBLE : View.INVISIBLE}"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
-                app:placeholderText="있을때만"
-                app:helperTextEnabled="true"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="@id/cost_textinput"
-                app:layout_constraintEnd_toEndOf="@id/cost_textinput">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/therapist_name_textinput"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:hint="치료사 이름"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
-                app:placeholderText="ex) 최재민"
-                app:helperTextEnabled="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/cost_textinput"
-                app:layout_constraintEnd_toStartOf="@id/cost_textinput">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={addViewModel.therapistName}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/cost_textinput"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="치료비"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
-                app:placeholderText="ex) 40000"
-                app:helperTextEnabled="true"
-                app:layout_constraintStart_toEndOf="@id/therapist_name_textinput"
-                app:layout_constraintTop_toBottomOf="@id/monthly_dues_textinput"
-                app:layout_constraintEnd_toEndOf="parent">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/addcommon_constraint"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="@{isFixChecked? View.VISIBLE : View.GONE}"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/therapist_name_textinput">
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                tools:context=".sleepdetail.SleepDetailFragment">
 
-                <TextView
-                    android:id="@+id/fixday_text"
-                    android:layout_width="300dp"
+
+                <ToggleButton
+                    android:id="@+id/fix_check"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
+                    android:textOn="고정"
+                    android:textOff="일회성"
+                    android:checked="@={isFixChecked}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/monthly_dues_textinput"
+                    app:layout_constraintTop_toTopOf="@id/monthly_dues_textinput"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/monthly_dues_textinput"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:hint="월회비"
+                    android:visibility="@{isFixChecked? View.VISIBLE : View.INVISIBLE}"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:errorEnabled="true"
+                    app:placeholderText="있을때만"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/cost_textinput"
+                    app:layout_constraintEnd_toEndOf="@id/cost_textinput">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/therapist_name_textinput"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:hint="치료사 이름"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:errorEnabled="true"
+                    app:placeholderText="ex) 최재민"
+                    app:helperTextEnabled="true"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="고정요일"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="@id/cost_textinput"
+                    app:layout_constraintEnd_toStartOf="@id/cost_textinput">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={addViewModel.therapistName}"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <ToggleButton
-                    android:id="@+id/mon_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:checked="@={isFixMon}"
-                    android:textOff="월"
-                    android:textOn="월"
-                    app:layout_constraintEnd_toStartOf="@id/tue_toggle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
 
-                <ToggleButton
-                    android:id="@+id/tue_toggle"
-                    android:layout_width="50dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/cost_textinput"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:checked="@={isFixTue}"
-                    android:textOff="화"
-                    android:textOn="화"
-                    app:layout_constraintEnd_toStartOf="@id/wed_toggle"
-                    app:layout_constraintStart_toEndOf="@id/mon_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="치료비"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:errorEnabled="true"
+                    app:placeholderText="ex) 40000"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintStart_toEndOf="@id/therapist_name_textinput"
+                    app:layout_constraintTop_toBottomOf="@id/monthly_dues_textinput"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={addViewModel.price}"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <ToggleButton
-                    android:id="@+id/wed_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:checked="@={isFixWed}"
-                    android:textOff="수"
-                    android:textOn="수"
-                    app:layout_constraintEnd_toStartOf="@id/thu_toggle"
-                    app:layout_constraintStart_toEndOf="@id/tue_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
-
-                <ToggleButton
-                    android:id="@+id/thu_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:checked="@={isFixThu}"
-                    android:textOff="목"
-                    android:textOn="목"
-                    app:layout_constraintEnd_toStartOf="@id/fri_toggle"
-                    app:layout_constraintStart_toEndOf="@id/wed_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
-
-                <ToggleButton
-                    android:id="@+id/fri_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:checked="@={isFixFri}"
-                    android:textOff="금"
-                    android:textOn="금"
-                    app:layout_constraintEnd_toStartOf="@id/sat_toggle"
-                    app:layout_constraintStart_toEndOf="@id/thu_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
-
-                <ToggleButton
-                    android:id="@+id/sat_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:checked="@={isFixSat}"
-                    android:textOff="토"
-                    android:textOn="토"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/fri_toggle"
-                    app:layout_constraintTop_toBottomOf="@id/fixday_text" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/mon_constraint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{isFixMon ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mon_toggle">
+                    android:visibility="@{isFixChecked? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/therapist_name_textinput">
 
                     <TextView
-                        android:id="@+id/mon_head_text"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/fixday_text"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:text="월"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mon_start_time_button"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="고정요일"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/mon_start_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.monStartCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mon_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/mon_head_text" />
-
-                    <Button
-                        android:id="@+id/mon_end_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mon_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/mon_start_time_button"/>
-
-                    <EditText
-                        android:id="@+id/mon_count_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1회"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ToggleButton
+                        android:id="@+id/mon_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixMon}"
+                        android:textOff="월"
+                        android:textOn="월"
+                        app:layout_constraintEnd_toStartOf="@id/tue_toggle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/tue_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixTue}"
+                        android:textOff="화"
+                        android:textOn="화"
+                        app:layout_constraintEnd_toStartOf="@id/wed_toggle"
+                        app:layout_constraintStart_toEndOf="@id/mon_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/wed_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixWed}"
+                        android:textOff="수"
+                        android:textOn="수"
+                        app:layout_constraintEnd_toStartOf="@id/thu_toggle"
+                        app:layout_constraintStart_toEndOf="@id/tue_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/thu_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixThu}"
+                        android:textOff="목"
+                        android:textOn="목"
+                        app:layout_constraintEnd_toStartOf="@id/fri_toggle"
+                        app:layout_constraintStart_toEndOf="@id/wed_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/fri_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixFri}"
+                        android:textOff="금"
+                        android:textOn="금"
+                        app:layout_constraintEnd_toStartOf="@id/sat_toggle"
+                        app:layout_constraintStart_toEndOf="@id/thu_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/sat_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixSat}"
+                        android:textOff="토"
+                        android:textOn="토"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/mon_end_time_button"/>
+                        app:layout_constraintStart_toEndOf="@id/fri_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/mon_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixMon ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mon_toggle">
+
+                        <TextView
+                            android:id="@+id/mon_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="월"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mon_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/mon_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.monStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mon_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/mon_head_text" />
+
+                        <Button
+                            android:id="@+id/mon_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mon_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/mon_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/mon_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.monNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/mon_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/tue_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixTue ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mon_constraint">
+
+                        <TextView
+                            android:id="@+id/tue_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="화"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/tue_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/tue_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.tueStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/tue_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/tue_head_text" />
+
+                        <Button
+                            android:id="@+id/tue_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/tue_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/tue_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/tue_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.tueNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tue_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/wed_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixWed ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tue_constraint">
+
+                        <TextView
+                            android:id="@+id/wed_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="수"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/wed_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/wed_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.wedStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/wed_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/wed_head_text" />
+
+                        <Button
+                            android:id="@+id/wed_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.wedEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/wed_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/wed_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/wed_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.wedNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/wed_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/thu_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixThu ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/wed_constraint">
+
+                        <TextView
+                            android:id="@+id/thu_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="목"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/thu_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/thu_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.thuStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/thu_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/thu_head_text" />
+
+                        <Button
+                            android:id="@+id/thu_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.thuEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/thu_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/thu_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/thu_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.thuNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/thu_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fri_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixFri ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/thu_constraint">
+
+                        <TextView
+                            android:id="@+id/fri_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="금"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/fri_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/fri_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.friStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/fri_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/fri_head_text" />
+
+                        <Button
+                            android:id="@+id/fri_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.friEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/fri_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/fri_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/fri_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.friNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/fri_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/sat_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixSat ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fri_constraint">
+
+                        <TextView
+                            android:id="@+id/sat_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="토"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sat_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/sat_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.satStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sat_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/sat_head_text" />
+
+                        <Button
+                            android:id="@+id/sat_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.satEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sat_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/sat_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/sat_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.satNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/sat_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/tue_constraint"
+                    android:id="@+id/onetime_constraint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{isFixTue ? View.VISIBLE : View.GONE}"
+                    android:layout_marginTop="12dp"
+                    android:visibility="@{!isFixChecked? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mon_constraint">
+                    app:layout_constraintTop_toBottomOf="@id/cost_textinput">
 
-                    <TextView
-                        android:id="@+id/tue_head_text"
+                    <Button
+                        android:id="@+id/onetime_date_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="화"
+                        android:text="@{addViewModel.setButtonDate(addViewModel.onetimeStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tue_start_time_button"
+                        app:layout_constraintEnd_toStartOf="@id/onetime_start_time_button"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/tue_start_time_button"
+                        android:id="@+id/onetime_start_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.tueStartCal)}"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.onetimeStartCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tue_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/tue_head_text" />
+                        app:layout_constraintEnd_toStartOf="@id/onetime_end_time_button"
+                        app:layout_constraintStart_toEndOf="@id/onetime_date_button" />
 
                     <Button
-                        android:id="@+id/tue_end_time_button"
+                        android:id="@+id/onetime_end_time_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.monEndCal)}"
+                        android:text="@{addViewModel.setButtonTime(addViewModel.onetimeEndCal)}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tue_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/tue_start_time_button"/>
+                        app:layout_constraintEnd_toStartOf="@id/onetime_continues_button"
+                        app:layout_constraintStart_toEndOf="@id/onetime_start_time_button"/>
 
-                    <EditText
-                        android:id="@+id/tue_count_edit"
+                    <Button
+                        android:id="@+id/onetime_continues_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1회"
+                        android:text="@{addViewModel.setButtonConnections(addViewModel.onetimeNumOfConnections, context)}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tue_end_time_button"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/wed_constraint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{isFixWed ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tue_constraint">
-
-                    <TextView
-                        android:id="@+id/wed_head_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="수"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/wed_start_time_button"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/wed_start_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.wedStartCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/wed_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/wed_head_text" />
-
-                    <Button
-                        android:id="@+id/wed_end_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.wedEndCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/wed_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/wed_start_time_button"/>
-
-                    <EditText
-                        android:id="@+id/wed_count_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1회"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/wed_end_time_button"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/thu_constraint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{isFixThu ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wed_constraint">
-
-                    <TextView
-                        android:id="@+id/thu_head_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="목"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/thu_start_time_button"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/thu_start_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.thuStartCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/thu_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/thu_head_text" />
-
-                    <Button
-                        android:id="@+id/thu_end_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.thuEndCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/thu_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/thu_start_time_button"/>
-
-                    <EditText
-                        android:id="@+id/thu_count_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1회"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/thu_end_time_button"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/fri_constraint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{isFixFri ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/thu_constraint">
-
-                    <TextView
-                        android:id="@+id/fri_head_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="금"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/fri_start_time_button"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/fri_start_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.friStartCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/fri_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/fri_head_text" />
-
-                    <Button
-                        android:id="@+id/fri_end_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.friEndCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/fri_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/fri_start_time_button"/>
-
-                    <EditText
-                        android:id="@+id/fri_count_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1회"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/fri_end_time_button"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/sat_constraint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{isFixSat ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fri_constraint">
-
-                    <TextView
-                        android:id="@+id/sat_head_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="토"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/sat_start_time_button"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/sat_start_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.satStartCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/sat_end_time_button"
-                        app:layout_constraintStart_toEndOf="@id/sat_head_text" />
-
-                    <Button
-                        android:id="@+id/sat_end_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{addViewModel.setButtonTime(addViewModel.satEndCal)}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/sat_count_edit"
-                        app:layout_constraintStart_toEndOf="@id/sat_start_time_button"/>
-
-                    <EditText
-                        android:id="@+id/sat_count_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1회"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/sat_end_time_button"/>
+                        app:layout_constraintStart_toEndOf="@id/onetime_end_time_button"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/onetime_constraint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:visibility="@{!isFixChecked? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cost_textinput">
+        </androidx.core.widget.NestedScrollView>
 
-                <Button
-                    android:id="@+id/onetime_date_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020-12-16"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/onetime_start_time_button"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:contentDescription="Add"
+            android:text="추가"
+            android:onClick="@{() -> addViewModel.save(isFixChecked, context)}"
+            app:icon="@drawable/ic_add_24px"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom|right|end" />
 
-                <Button
-                    android:id="@+id/onetime_start_time_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{addViewModel.setButtonTime(addViewModel.onetimeStartCal)}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/onetime_end_time_button"
-                    app:layout_constraintStart_toEndOf="@id/onetime_date_button" />
-
-                <Button
-                    android:id="@+id/onetime_end_time_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{addViewModel.setButtonTime(addViewModel.onetimeEndCal)}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/onetime_count_edit"
-                    app:layout_constraintStart_toEndOf="@id/onetime_start_time_button"/>
-
-                <EditText
-                    android:id="@+id/onetime_count_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1회"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/onetime_end_time_button"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/connections_one"
+        android:title="@string/menu_connections_one"/>
+
+    <item
+        android:id="@+id/connections_two"
+        android:title="2타임"/>
+
+    <item
+        android:id="@+id/connections_three"
+        android:title="3타임"/>
+
+</menu>

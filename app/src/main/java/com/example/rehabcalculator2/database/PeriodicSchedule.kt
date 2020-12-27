@@ -37,13 +37,16 @@ data class PeriodicSchedule(
         var dayOfWeek: Int,
 
         @ColumnInfo(name = "start_time")                //시작시간
-        var startTime: Long = 0,
+        var startTime: Long,
 
-        @ColumnInfo(name = "treatment_time")            //치료단위시간
-        var treatmentTime: Int = 45,
+        @ColumnInfo(name = "end_time")                //종료시간
+        var endTime: Long,
 
         @ColumnInfo(name = "price")
         var price: Int,
+
+        @ColumnInfo(name = "monthly_fee")
+        var monthlyFee: Int,
 
         @ColumnInfo(name = "number_of_consecutive_lectures")
         var numberOfConsecutiveLectures: Int = 1        //연강 여부

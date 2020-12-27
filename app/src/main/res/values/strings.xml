@@ -3,4 +3,11 @@
     <string name="title_add">Add</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="menu_connections_one">연결없음</string>
+    <string name="menu_connections_two">2타임</string>
+    <string name="menu_connections_three">3타임</string>
+
+    <string name="add_valid_name_and_price">이름과 치료비 정보를 반드시 입력해 주세요!</string>
+
 </resources>

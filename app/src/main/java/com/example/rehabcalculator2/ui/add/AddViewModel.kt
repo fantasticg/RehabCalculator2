@@ -16,13 +16,20 @@
 
 package com.example.rehabcalculator2.ui.add
 
-import android.widget.Button
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.rehabcalculator2.ObservableViewModel
+import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.OnetimeSchedule
 import com.example.rehabcalculator2.database.PeriodicSchedule
 import com.example.rehabcalculator2.database.PeriodicScheduleDatabaseDao
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,39 +47,69 @@ class AddViewModel(
 
     val therapistName = MutableLiveData<String>()
 
+    val price = MutableLiveData<String>()
+
+    val montlyMembershipFee = MutableLiveData<String>()
+
+
+
     var monStartCal: Calendar = Calendar.getInstance()
 
     var monEndCal: Calendar = Calendar.getInstance()
+
+    var monNumOfConnections : Int = 1
+
 
     var tueStartCal: Calendar = Calendar.getInstance()
 
     var tueEndCal: Calendar = Calendar.getInstance()
 
+    var tueNumOfConnections : Int = 1
+
+
     var wedStartCal: Calendar = Calendar.getInstance()
 
     var wedEndCal: Calendar = Calendar.getInstance()
+
+    var wedNumOfConnections : Int = 1
+
 
     var thuStartCal: Calendar = Calendar.getInstance()
 
     var thuEndCal: Calendar = Calendar.getInstance()
 
+    var thuNumOfConnections : Int = 1
+
+
     var friStartCal: Calendar = Calendar.getInstance()
 
     var friEndCal: Calendar = Calendar.getInstance()
+
+    var friNumOfConnections : Int = 1
+
 
     var satStartCal: Calendar = Calendar.getInstance()
 
     var satEndCal: Calendar = Calendar.getInstance()
 
+    var satNumOfConnections : Int = 1
+
+
     var onetimeStartCal: Calendar = Calendar.getInstance()
 
     var onetimeEndCal: Calendar = Calendar.getInstance()
+
+    var onetimeNumOfConnections : Int = 1
+
+
+    var databaseIdCount : Long = 1L
 
     init {
         monStartCal.set(Calendar.HOUR_OF_DAY, 16)
         monStartCal.set(Calendar.MINUTE, 0)
         monEndCal.set(Calendar.HOUR_OF_DAY, 16)
         monEndCal.set(Calendar.MINUTE, 50)
+
 
         tueStartCal.set(Calendar.HOUR_OF_DAY, 16)
         tueStartCal.set(Calendar.MINUTE, 0)
@@ -109,69 +146,61 @@ class AddViewModel(
     fun setButtonTime(cal : Calendar) : String {
         return SimpleDateFormat("a h:mm").format(cal.time)
     }
-    /*
 
-    /*
-    /** Coroutine setup variables */
-
-    /**
-     * viewModelJob allows us to cancel all coroutines started by this ViewModel.
-     */
-    private val viewModelJob = Job()
-    */
-    private val night = MediatorLiveData<OnetimeSchedule>()
-
-    fun getNight() = night
-
-    init {
-        night.addSource(database.getNightWithId(sleepNightKey), night::setValue)
+    fun setButtonConnections(numOfConnections : Int, context : Context) : String {
+        when (numOfConnections) {
+            1 -> return context.getString(R.string.menu_connections_one)
+            2 -> return context.getString(R.string.menu_connections_two)
+            3 -> return context.getString(R.string.menu_connections_three)
+        }
+        return context.getString(R.string.menu_connections_one)
     }
 
-    /**
-     * Variable that tells the fragment whether it should navigate to [SleepTrackerFragment].
-     *
-     * This is `private` because we don't want to expose the ability to set [MutableLiveData] to
-     * the [Fragment]
-     */
-    private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
-
-    /**
-     * When true immediately navigate back to the [SleepTrackerFragment]
-     */
-    val navigateToSleepTracker: LiveData<Boolean?>
-        get() = _navigateToSleepTracker
-    /*
-    /**
-     * Cancels all coroutines when the ViewModel is cleared, to cleanup any pending work.
-     *
-     * onCleared() gets called when the ViewModel is destroyed.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-    */
-
-    /**
-     * Call this immediately after navigating to [SleepTrackerFragment]
-     */
-    fun doneNavigating() {
-        _navigateToSleepTracker.value = null
+    fun setButtonDate(cal : Calendar) : String {
+        return cal.get(Calendar.YEAR).toString()+"-"+(cal.get(Calendar.MONTH)+1).toString()+"-"+cal.get(Calendar.DAY_OF_MONTH).toString()
     }
 
-    fun onClose() {
-        _navigateToSleepTracker.value = true
+
+    fun save(fixChecked : Boolean, context : Context) {
+
+        if(therapistName.value.isNullOrEmpty() || price.value.isNullOrEmpty()) {
+            Toast.makeText(context, R.string.add_valid_name_and_price, Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if(fixChecked) {
+            viewModelScope.launch {
+                periodic_insert()
+            }
+
+        } else {
+            viewModelScope.launch {
+                onetime_insert()
+                withContext(Dispatchers.IO) {
+                    var night = sdatabase.getSchedule()
+                    Log.d("aaa", night.toString())
+                }
+
+            }
+        }
+
     }
-*/
 
     private suspend fun periodic_insert() {
-        val periodic_s = PeriodicSchedule(1L, 2L, "a", 0, 3L, 45, 50000, 1)
-        pdatabase.insert(periodic_s);
+        val periodic_mon = PeriodicSchedule(databaseIdCount++, 0L, therapistName.value!!, 0, onetimeStartCal.timeInMillis, onetimeEndCal.timeInMillis, Integer.parseInt(price.value!!), Integer.parseInt(montlyMembershipFee.value!!), monNumOfConnections)
+        withContext(Dispatchers.IO) {
+            pdatabase.insert(periodic_mon)
+        }
+
     }
 
     private suspend fun onetime_insert() {
-        val onetime_s = OnetimeSchedule(1L, 2L, "a", 3L,4L, 45, 50000, 1)
-        sdatabase.insert(onetime_s);
+
+        val onetime_s = OnetimeSchedule(databaseIdCount++, 0L, therapistName.value!!, onetimeStartCal.timeInMillis, onetimeEndCal.timeInMillis, Integer.parseInt(price.value!!), onetimeNumOfConnections)
+        withContext(Dispatchers.IO) {
+            sdatabase.insert(onetime_s);
+        }
+
     }
 
 

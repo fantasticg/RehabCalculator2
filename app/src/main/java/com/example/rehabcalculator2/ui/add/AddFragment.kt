@@ -20,10 +20,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.MenuRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +34,6 @@ import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.PeriodicScheduleDatabase
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentAddBinding
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -85,6 +87,10 @@ class AddFragment : Fragment() {
             openEndTimePicker(it as Button, addViewModel.monEndCal, addViewModel.monStartCal)
         }
 
+        binding.monContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
+        }
+
         //tue
         binding.tueStartTimeButton.setOnClickListener {
             openStartTimePicker(it as Button, binding.tueEndTimeButton, addViewModel.tueStartCal, addViewModel.tueEndCal)
@@ -92,6 +98,10 @@ class AddFragment : Fragment() {
 
         binding.tueEndTimeButton.setOnClickListener {
             openEndTimePicker(it as Button, addViewModel.tueEndCal, addViewModel.tueStartCal)
+        }
+
+        binding.tueContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
         }
 
         //wed
@@ -103,6 +113,10 @@ class AddFragment : Fragment() {
             openEndTimePicker(it as Button, addViewModel.wedEndCal, addViewModel.wedStartCal)
         }
 
+        binding.wedContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
+        }
+
         //thu
         binding.thuStartTimeButton.setOnClickListener {
             openStartTimePicker(it as Button, binding.thuEndTimeButton, addViewModel.thuStartCal, addViewModel.thuEndCal)
@@ -110,6 +124,10 @@ class AddFragment : Fragment() {
 
         binding.thuEndTimeButton.setOnClickListener {
             openEndTimePicker(it as Button, addViewModel.thuEndCal, addViewModel.thuStartCal)
+        }
+
+        binding.thuContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
         }
 
         //fri
@@ -121,6 +139,10 @@ class AddFragment : Fragment() {
             openEndTimePicker(it as Button, addViewModel.friEndCal, addViewModel.friStartCal)
         }
 
+        binding.friContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
+        }
+
         //sat
         binding.satStartTimeButton.setOnClickListener {
             openStartTimePicker(it as Button, binding.satEndTimeButton, addViewModel.satStartCal, addViewModel.satEndCal)
@@ -128,6 +150,10 @@ class AddFragment : Fragment() {
 
         binding.satEndTimeButton.setOnClickListener {
             openEndTimePicker(it as Button, addViewModel.satEndCal, addViewModel.satStartCal)
+        }
+
+        binding.satContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
         }
 
 
@@ -142,6 +168,10 @@ class AddFragment : Fragment() {
 
         binding.onetimeEndTimeButton.setOnClickListener {
             openEndTimePicker(it as Button, addViewModel.onetimeEndCal, addViewModel.onetimeStartCal)
+        }
+
+        binding.onetimeContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
         }
 
 
@@ -202,5 +232,45 @@ class AddFragment : Fragment() {
 
         DatePickerDialog(requireContext(), dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
+
+    fun openConnectionsPopupMenu(button: Button) {
+        val popup = PopupMenu(context, button)
+        popup.menuInflater.inflate(R.menu.connections, popup.menu)
+
+        var numOfCOnnections : Int = 1;
+
+        popup.setOnMenuItemClickListener {
+            item -> when(item.itemId) {
+
+                    R.id.connections_one -> numOfCOnnections = 1
+                    R.id.connections_two -> numOfCOnnections = 2
+                    R.id.connections_three -> numOfCOnnections = 3
+                    else -> numOfCOnnections = 1
+            }
+
+            when(button.id) {
+                R.id.mon_continues_button -> addViewModel.monNumOfConnections = numOfCOnnections
+                R.id.tue_continues_button -> addViewModel.tueNumOfConnections = numOfCOnnections
+                R.id.wed_continues_button -> addViewModel.wedNumOfConnections = numOfCOnnections
+                R.id.thu_continues_button -> addViewModel.thuNumOfConnections = numOfCOnnections
+                R.id.fri_continues_button -> addViewModel.friNumOfConnections = numOfCOnnections
+                R.id.sat_continues_button -> addViewModel.satNumOfConnections = numOfCOnnections
+                R.id.onetime_continues_button -> addViewModel.onetimeNumOfConnections = numOfCOnnections
+            }
+
+            button.text = context?.let {
+                addViewModel.setButtonConnections(numOfCOnnections,
+                    it
+                )
+            }
+
+            false
+        }
+
+        popup.show()
+
+    }
+
+
 
 }
