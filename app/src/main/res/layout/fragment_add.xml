@@ -118,7 +118,11 @@
                     app:layout_constraintEnd_toEndOf="@id/cost_textinput">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:text="@={addViewModel.montlyMembershipFee}"/>
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -163,8 +167,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={addViewModel.price}"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:text="@={addViewModel.price}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -610,7 +615,7 @@
             android:layout_margin="8dp"
             android:contentDescription="Add"
             android:text="추가"
-            android:onClick="@{() -> addViewModel.save(isFixChecked, context)}"
+            android:onClick="@{() -> addViewModel.save(isFixChecked, isFixMon, isFixTue, isFixWed, isFixThu, isFixFri, isFixSat, context)}"
             app:icon="@drawable/ic_add_24px"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|right|end" />

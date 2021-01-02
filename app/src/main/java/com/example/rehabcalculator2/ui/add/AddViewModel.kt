@@ -21,6 +21,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.rehabcalculator2.App
 import com.example.rehabcalculator2.ObservableViewModel
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.OnetimeSchedule
@@ -49,15 +50,15 @@ class AddViewModel(
 
     val price = MutableLiveData<String>()
 
-    val montlyMembershipFee = MutableLiveData<String>()
-
-
+    var montlyMembershipFee = MutableLiveData<String>()
 
     var monStartCal: Calendar = Calendar.getInstance()
 
     var monEndCal: Calendar = Calendar.getInstance()
 
     var monNumOfConnections : Int = 1
+
+    val monScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.MONDAY
 
 
     var tueStartCal: Calendar = Calendar.getInstance()
@@ -66,12 +67,18 @@ class AddViewModel(
 
     var tueNumOfConnections : Int = 1
 
+    val tueScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.TUESDAY
+
+
 
     var wedStartCal: Calendar = Calendar.getInstance()
 
     var wedEndCal: Calendar = Calendar.getInstance()
 
     var wedNumOfConnections : Int = 1
+
+    val wedScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.WEDNESDAY
+
 
 
     var thuStartCal: Calendar = Calendar.getInstance()
@@ -80,12 +87,16 @@ class AddViewModel(
 
     var thuNumOfConnections : Int = 1
 
+    val thuScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.THURSDAY
+
 
     var friStartCal: Calendar = Calendar.getInstance()
 
     var friEndCal: Calendar = Calendar.getInstance()
 
     var friNumOfConnections : Int = 1
+
+    val friScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.FRIDAY
 
 
     var satStartCal: Calendar = Calendar.getInstance()
@@ -94,6 +105,9 @@ class AddViewModel(
 
     var satNumOfConnections : Int = 1
 
+    val satScheduleDayOfWeek : ScheduleDayOfWeek = ScheduleDayOfWeek.SATURDAY
+
+
 
     var onetimeStartCal: Calendar = Calendar.getInstance()
 
@@ -101,8 +115,6 @@ class AddViewModel(
 
     var onetimeNumOfConnections : Int = 1
 
-
-    var databaseIdCount : Long = 1L
 
     init {
         monStartCal.set(Calendar.HOUR_OF_DAY, 16)
@@ -161,7 +173,7 @@ class AddViewModel(
     }
 
 
-    fun save(fixChecked : Boolean, context : Context) {
+    fun save(fixChecked : Boolean, fixedMon : Boolean?, fixedTue : Boolean?, fixedWed : Boolean?, fixedThu : Boolean?, fixedFri : Boolean?, fixedSat : Boolean?, context : Context) {
 
         if(therapistName.value.isNullOrEmpty() || price.value.isNullOrEmpty()) {
             Toast.makeText(context, R.string.add_valid_name_and_price, Toast.LENGTH_LONG).show()
@@ -170,7 +182,13 @@ class AddViewModel(
 
         if(fixChecked) {
             viewModelScope.launch {
-                periodic_insert()
+                periodic_insert(fixedMon ?: false, fixedTue ?: false, fixedWed ?: false, fixedThu ?: false, fixedFri ?: false, fixedSat ?: false)
+                withContext(Dispatchers.IO) {
+                    var night = pdatabase.getPSchedule()
+                    Log.d("bbb", night.toString())
+                }
+
+
             }
 
         } else {
@@ -186,17 +204,61 @@ class AddViewModel(
 
     }
 
-    private suspend fun periodic_insert() {
-        val periodic_mon = PeriodicSchedule(databaseIdCount++, 0L, therapistName.value!!, 0, onetimeStartCal.timeInMillis, onetimeEndCal.timeInMillis, Integer.parseInt(price.value!!), Integer.parseInt(montlyMembershipFee.value!!), monNumOfConnections)
-        withContext(Dispatchers.IO) {
-            pdatabase.insert(periodic_mon)
+    private suspend fun periodic_insert(fixedMon: Boolean, fixedTue: Boolean, fixedWed: Boolean, fixedThu: Boolean, fixedFri: Boolean, fixedSat: Boolean) {
+
+        var mFeeOrZero = 0
+
+        if(!montlyMembershipFee.value.isNullOrEmpty()) {
+            mFeeOrZero = Integer.parseInt(montlyMembershipFee.value)
+        }
+
+        if(fixedMon) {
+            val periodic_mon = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, monScheduleDayOfWeek.number, monStartCal.timeInMillis, monEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, monNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_mon)
+            }
+        }
+
+        if(fixedTue) {
+            val periodic_tue = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, tueScheduleDayOfWeek.number, tueStartCal.timeInMillis, tueEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, tueNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_tue)
+            }
+        }
+
+        if(fixedWed) {
+            val periodic_wed = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, wedScheduleDayOfWeek.number, wedStartCal.timeInMillis, wedEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, wedNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_wed)
+            }
+        }
+
+        if(fixedThu) {
+            val periodic_thu = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, thuScheduleDayOfWeek.number, thuStartCal.timeInMillis, thuEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, thuNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_thu)
+            }
+        }
+
+        if(fixedFri) {
+            val periodic_fri = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, friScheduleDayOfWeek.number, friStartCal.timeInMillis, friEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, friNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_fri)
+            }
+        }
+
+        if(fixedSat) {
+            val periodic_sat = PeriodicSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, satScheduleDayOfWeek.number, satStartCal.timeInMillis, satEndCal.timeInMillis, Integer.parseInt(price.value), mFeeOrZero, satNumOfConnections)
+            withContext(Dispatchers.IO) {
+                pdatabase.insert(periodic_sat)
+            }
         }
 
     }
 
     private suspend fun onetime_insert() {
 
-        val onetime_s = OnetimeSchedule(databaseIdCount++, 0L, therapistName.value!!, onetimeStartCal.timeInMillis, onetimeEndCal.timeInMillis, Integer.parseInt(price.value!!), onetimeNumOfConnections)
+        val onetime_s = OnetimeSchedule(App.prefs.pref_databaseId++, 0L, therapistName.value!!, onetimeStartCal.timeInMillis, onetimeEndCal.timeInMillis, Integer.parseInt(price.value!!), onetimeNumOfConnections)
         withContext(Dispatchers.IO) {
             sdatabase.insert(onetime_s);
         }

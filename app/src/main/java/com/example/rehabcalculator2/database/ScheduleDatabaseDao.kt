@@ -16,7 +16,7 @@ interface ScheduleDatabaseDao {
     suspend fun update(schedule: OnetimeSchedule)
 
     @Query("SELECT * FROM schedules_table")
-    suspend fun getSchedule(): List<OnetimeSchedule?>
+    suspend fun getSchedule(): List<OnetimeSchedule>
 
     @Query("DELETE FROM schedules_table")
     suspend fun clear()

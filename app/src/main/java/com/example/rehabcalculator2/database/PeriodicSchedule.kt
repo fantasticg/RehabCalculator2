@@ -20,7 +20,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "iteractive_schedules_table")
+@Entity(tableName = "periodic_schedules_table")
 data class PeriodicSchedule(
 
         // 고정) 치료사, 금액, 고정/일회성 치료인지, 월회비, 요일, 시작시간, 치료단위시간,연강여부
