@@ -37,6 +37,10 @@
             name="isFixSat"
             type="java.lang.Boolean"/>
 
+        <variable
+            name="isFixSun"
+            type="java.lang.Boolean"/>
+
 
 
         <variable
@@ -256,8 +260,21 @@
                         android:textOff="토"
                         android:textOn="토"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/sun_toggle"
                         app:layout_constraintStart_toEndOf="@id/fri_toggle"
                         app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
+                    <ToggleButton
+                        android:id="@+id/sun_toggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:checked="@={isFixSun}"
+                        android:textOff="일"
+                        android:textOn="일"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/sat_toggle"
+                        app:layout_constraintTop_toBottomOf="@id/fixday_text" />
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/mon_constraint"
@@ -553,6 +570,55 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/sun_constraint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{isFixSun ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/sat_constraint">
+
+                        <TextView
+                            android:id="@+id/sun_head_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="일"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sun_start_time_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/sun_start_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.sunStartCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sun_end_time_button"
+                            app:layout_constraintStart_toEndOf="@id/sun_head_text" />
+
+                        <Button
+                            android:id="@+id/sun_end_time_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonTime(addViewModel.sunEndCal)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/sun_continues_button"
+                            app:layout_constraintStart_toEndOf="@id/sun_start_time_button"/>
+
+                        <Button
+                            android:id="@+id/sun_continues_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{addViewModel.setButtonConnections(addViewModel.sunNumOfConnections, context)}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/sun_end_time_button"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -615,7 +681,7 @@
             android:layout_margin="8dp"
             android:contentDescription="Add"
             android:text="추가"
-            android:onClick="@{() -> addViewModel.save(isFixChecked, isFixMon, isFixTue, isFixWed, isFixThu, isFixFri, isFixSat, context)}"
+            android:onClick="@{() -> addViewModel.save(isFixChecked, isFixMon, isFixTue, isFixWed, isFixThu, isFixFri, isFixSat, isFixSun, context)}"
             app:icon="@drawable/ic_add_24px"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|right|end" />

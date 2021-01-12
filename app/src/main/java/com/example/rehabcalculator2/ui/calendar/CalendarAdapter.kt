@@ -1,20 +1,24 @@
 package com.example.rehabcalculator2.ui.calendar
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rehabcalculator2.database.OnetimeSchedule
-import com.example.rehabcalculator2.database.PeriodicScheduleDatabaseDao
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
 import com.example.rehabcalculator2.databinding.ListItemScheduleBinding
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase : ScheduleDatabaseDao, val pdatabase : PeriodicScheduleDatabaseDao, val viewModel : CalendarViewModel) :
+class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase : ScheduleDatabaseDao, val viewModel : CalendarViewModel) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(/* DayCallback() */) {
 
         init {
-                viewModel.makeMonthDate()
+                viewModel.viewModelScope.launch {
+                        viewModel.makeMonthDate()
+                }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -26,18 +30,41 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
                 when(holder) {
                         is ViewHolder -> {
 
+                                if(position == 0 ) {
+                                        Log.d("hkyeom111", "onBindViewHolder")
+                                }
+
                                 //val scheduleItem = getItem(position) as DataItem.DayItem
                                 //holder.bind(scheduleItem.schedule)
 
+                                //날짜 글씨 색상 및 알파 값 설정
                                 if (position % viewModel.DAYS_OF_WEEK == 0) holder.tv_date.setTextColor(Color.parseColor("#ff1200"))
                                 else holder.tv_date.setTextColor(Color.parseColor("#676d6e"))
 
                                 if (position < viewModel.prevMonthTailOffset || position >= viewModel.prevMonthTailOffset + viewModel.currentMonthMaxDate) {
                                         holder.tv_date.alpha = 0.3f
+                                        holder.tv_sc1.alpha = 0.3f
+                                        holder.tv_sc2.alpha = 0.3f
+                                        holder.tv_sc3.alpha = 0.3f
+                                        holder.tv_count.alpha = 0.3f
+
                                 } else {
                                         holder.tv_date.alpha = 1f
                                 }
                                 holder.tv_date.text = viewModel.data[position].toString()
+
+                                //달력뷰에 스케줄 텍스트 추가
+
+                                if(viewModel.schedulesMap!!.get(viewModel.dataKey[position]) != null) {
+                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 0)
+                                                holder.tv_sc1.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![0]!!.name
+                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 1)
+                                                holder.tv_sc2.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![1]!!.name
+                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 2)
+                                                holder.tv_sc3.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![2]!!.name
+                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 3)
+                                                holder.tv_count.text = "+"+((viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size - 3).toString())
+                                }
 
                         }
                 }
@@ -52,6 +79,11 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
                 : RecyclerView.ViewHolder(binding.root) {
 
                 val tv_date = binding.tvDate
+                val tv_sc1 = binding.tvSc1
+                val tv_sc2 = binding.tvSc2
+                val tv_sc3 = binding.tvSc3
+                val tv_count = binding.tvCount
+
 
                 fun bind(item: OnetimeSchedule) {
                         binding.schedule = item

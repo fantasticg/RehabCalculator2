@@ -1,11 +1,10 @@
 package com.example.rehabcalculator2.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(entities = [OnetimeSchedule::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class ScheduleDatabase : RoomDatabase() {
 
     /**

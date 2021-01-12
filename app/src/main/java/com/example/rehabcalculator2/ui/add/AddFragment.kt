@@ -20,20 +20,18 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.annotation.MenuRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rehabcalculator2.R
-import com.example.rehabcalculator2.database.PeriodicScheduleDatabase
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentAddBinding
+import com.example.rehabcalculator2.ui.PickerUtils
 import java.util.*
 
 
@@ -62,8 +60,7 @@ class AddFragment : Fragment() {
 
         // Create an instance of the ViewModel Factory.
         val sdataSource = ScheduleDatabase.getInstance(application).scheduleDatabaseDao
-        val pdataSource = PeriodicScheduleDatabase.getInstance(application).periodscheduleDatabaseDao
-        val viewModelFactory = AddViewModelFactory(sdataSource, pdataSource)
+        val viewModelFactory = AddViewModelFactory(sdataSource)
 
         // Get a reference to the ViewModel associated with this fragment.
         addViewModel =
@@ -156,10 +153,24 @@ class AddFragment : Fragment() {
             openConnectionsPopupMenu(it as Button)
         }
 
+        //sat
+        binding.sunStartTimeButton.setOnClickListener {
+            openStartTimePicker(it as Button, binding.sunEndTimeButton, addViewModel.sunStartCal, addViewModel.sunEndCal)
+        }
+
+        binding.sunEndTimeButton.setOnClickListener {
+            openEndTimePicker(it as Button, addViewModel.sunEndCal, addViewModel.sunStartCal)
+        }
+
+        binding.sunContinuesButton.setOnClickListener {
+            openConnectionsPopupMenu(it as Button)
+        }
+
 
         //onetime
         binding.onetimeDateButton.setOnClickListener {
-            openDatePicker(it as Button, addViewModel.onetimeStartCal)
+            //openDatePicker(ctx :Context, button : Button, startCal : Calendar, endCal : Calendar) {
+            context?.let { it1 -> PickerUtils.openDatePicker(it1, it as Button, addViewModel.onetimeStartCal, addViewModel.onetimeEndCal) }
         }
 
         binding.onetimeStartTimeButton.setOnClickListener {
@@ -225,13 +236,25 @@ class AddFragment : Fragment() {
         TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false).show()
     }
 
+    /*
     fun openDatePicker(button : Button, cal : Calendar) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            button.text = year.toString()+"-"+(month+1).toString()+"-"+dayOfMonth.toString()
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, date ->
+
+            addViewModel.onetimeStartCal.set(Calendar.YEAR, year)
+            addViewModel.onetimeStartCal.set(Calendar.MONTH, month)
+            addViewModel.onetimeStartCal.set(Calendar.DATE, date)
+
+            addViewModel.onetimeEndCal.set(Calendar.YEAR, year)
+            addViewModel.onetimeEndCal.set(Calendar.MONTH, month)
+            addViewModel.onetimeEndCal.set(Calendar.DATE, date)
+
+            button.text = year.toString()+"-"+(month+1).toString()+"-"+date.toString()
         }
 
         DatePickerDialog(requireContext(), dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
+
+     */
 
     fun openConnectionsPopupMenu(button: Button) {
         val popup = PopupMenu(context, button)
@@ -255,6 +278,7 @@ class AddFragment : Fragment() {
                 R.id.thu_continues_button -> addViewModel.thuNumOfConnections = numOfCOnnections
                 R.id.fri_continues_button -> addViewModel.friNumOfConnections = numOfCOnnections
                 R.id.sat_continues_button -> addViewModel.satNumOfConnections = numOfCOnnections
+                R.id.sun_continues_button -> addViewModel.sunNumOfConnections = numOfCOnnections
                 R.id.onetime_continues_button -> addViewModel.onetimeNumOfConnections = numOfCOnnections
             }
 

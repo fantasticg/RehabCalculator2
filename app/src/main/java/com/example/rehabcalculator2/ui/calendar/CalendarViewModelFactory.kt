@@ -18,7 +18,6 @@ package com.example.rehabcalculator2.ui.calendar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rehabcalculator2.database.PeriodicScheduleDatabaseDao
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
 
 /**
@@ -26,15 +25,12 @@ import com.example.rehabcalculator2.database.ScheduleDatabaseDao
  *
  * Provides the key for the night and the SleepDatabaseDao to the ViewModel.
  */
-class CalendarViewModelFactory(private val sdataSource: ScheduleDatabaseDao,
-                               private val pdataSource: PeriodicScheduleDatabaseDao) : ViewModelProvider.Factory {
+class CalendarViewModelFactory(private val sdataSource: ScheduleDatabaseDao) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
-            return CalendarViewModel(sdataSource, pdataSource) as T
+            return CalendarViewModel(sdataSource) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-
- 

@@ -19,6 +19,7 @@ package com.example.rehabcalculator2.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "schedules_table")
 data class OnetimeSchedule(
@@ -33,16 +34,22 @@ data class OnetimeSchedule(
     @ColumnInfo(name = "therapist_name")            // 치료사 이름
     var name: String = "a",
 
-    @ColumnInfo(name = "start_time")                //날짜 및 시작시간
-    var startTime: Long,
+    @ColumnInfo(name = "day_of_weeks")              // 반복 요일
+    var dayOfWeek: Int = -1,
 
-    @ColumnInfo(name = "end_time")                //종료시간
-    var endTime: Long,
+    @ColumnInfo(name = "start_time")                // 날짜 및 시작시간
+    var startTime: Date?,
 
-    @ColumnInfo(name = "price")
+    @ColumnInfo(name = "end_time")                  // 종료시간
+    var endTime: Date?,
+
+    @ColumnInfo(name = "price")                     // 회당 비용
     var price: Int,
 
+    @ColumnInfo(name = "monthly_fee")               // 월회비
+    var monthlyFee: Int,
+
     @ColumnInfo(name = "number_of_consecutive_lectures")
-    var numberOfConsecutiveLectures: Int = 1        //연결치료여부
+    var numberOfConsecutiveLectures: Int = 1        // 연결치료여부
 
 )

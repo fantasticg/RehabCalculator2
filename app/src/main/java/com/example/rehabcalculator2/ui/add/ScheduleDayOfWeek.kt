@@ -1,5 +1,5 @@
 package com.example.rehabcalculator2.ui.add
 
 enum class ScheduleDayOfWeek(val number: Int) {
-    MONDAY(0), TUESDAY(1), WEDNESDAY(2), THURSDAY(3), FRIDAY(4), SATURDAY(5)
+    SUNDAY(1), MONDAY(2), TUESDAY(3), WEDNESDAY(4), THURSDAY(5), FRIDAY(6), SATURDAY(7)
 }

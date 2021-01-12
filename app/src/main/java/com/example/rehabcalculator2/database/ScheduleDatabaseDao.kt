@@ -16,7 +16,19 @@ interface ScheduleDatabaseDao {
     suspend fun update(schedule: OnetimeSchedule)
 
     @Query("SELECT * FROM schedules_table")
-    suspend fun getSchedule(): List<OnetimeSchedule>
+    suspend fun getAllSchedules(): List<OnetimeSchedule>
+
+    @Query("SELECT * FROM schedules_table WHERE start_time BETWEEN :from AND :to AND day_of_weeks >= 0")
+    suspend fun findPeriodicSchedulesBetweenDates(from: Date, to: Date): List<OnetimeSchedule>
+
+    @Query("SELECT * FROM schedules_table WHERE start_time BETWEEN :from AND :to AND day_of_weeks < 0")
+    suspend fun findSchedulesBetweenDates(from: Date, to: Date): List<OnetimeSchedule>
+
+
+    /*
+    @Query("SELECT * FROM schedules_table")
+    suspend fun getSchedule(month ): List<OnetimeSchedule>
+     */
 
     @Query("DELETE FROM schedules_table")
     suspend fun clear()
