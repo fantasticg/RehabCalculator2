@@ -23,6 +23,7 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 //val item = DataItem.DayItem()
+
                 return ViewHolder.from(parent)
         }
 
@@ -56,14 +57,19 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
                                 //달력뷰에 스케줄 텍스트 추가
 
                                 if(viewModel.schedulesMap!!.get(viewModel.dataKey[position]) != null) {
-                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 0)
-                                                holder.tv_sc1.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![0]!!.name
-                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 1)
-                                                holder.tv_sc2.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![1]!!.name
-                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 2)
-                                                holder.tv_sc3.text = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!![2]!!.name
-                                        if(viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size > 3)
-                                                holder.tv_count.text = "+"+((viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!.size - 3).toString())
+
+                                        val  sc_list = viewModel.schedulesMap!!.get(viewModel.dataKey[position])!!
+
+                                        sc_list.sortBy { onetimeSchedule -> onetimeSchedule.startTime }
+
+                                        if(sc_list.size > 0)
+                                                holder.tv_sc1.text =sc_list[0]!!.name
+                                        if(sc_list.size > 1)
+                                                holder.tv_sc2.text = sc_list[1]!!.name
+                                        if(sc_list.size > 2)
+                                                holder.tv_sc3.text = sc_list[2]!!.name
+                                        if(sc_list.size > 3)
+                                                holder.tv_count.text = "+"+((sc_list.size - 3).toString())
                                 }
 
                         }
@@ -104,9 +110,10 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
         }
 
 
+
 }
 /*
-class DayCallback : DiffUtil.ItemCallback<DataItem>() {
+class DayCallback : DiffUtil.ItemCallback<DataItem>() {`
         override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                 return oldItem.id == newItem.id
         }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">RehabCalculator2</string>
-    <string name="title_add">Add</string>
+    <string name="title_calendar">Calendar</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
@@ -9,5 +9,7 @@
     <string name="menu_connections_three">3타임</string>
 
     <string name="add_valid_name_and_price">이름과 치료비 정보를 반드시 입력해 주세요!</string>
+
+    <string name="calendar_topappbar_add">추가</string>
 
 </resources>

@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewModel() {
 
     val DAYS_OF_WEEK = 7
-    val LOW_OF_CALENDAR =6
+    var LOW_OF_CALENDAR = 0
 
     //현재 달력에 보여줄 기준달
     val current_calendar = Calendar.getInstance()
@@ -67,7 +67,14 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
         makeCurrentMonth(current_calendar)
 
+        LOW_OF_CALENDAR =6
+        if((LOW_OF_CALENDAR*7 - (prevMonthTailOffset + currentMonthMaxDate)) >= 7)
+            LOW_OF_CALENDAR = 5
+        else
+            LOW_OF_CALENDAR = 6
+
         nextMonthHeadOffset = LOW_OF_CALENDAR * DAYS_OF_WEEK - (prevMonthTailOffset + currentMonthMaxDate)
+
         makeNextMonthHead()
 
         val fromCalendar = current_calendar.clone() as Calendar
@@ -148,6 +155,7 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
             schedulesMap!![key] = list
         } else {
             schedulesMap!![key]?.add(schedule)
+
         }
     }
 

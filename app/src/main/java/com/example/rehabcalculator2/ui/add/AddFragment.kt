@@ -18,16 +18,21 @@ package com.example.rehabcalculator2.ui.add
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentAddBinding
@@ -62,10 +67,25 @@ class AddFragment : Fragment() {
         val sdataSource = ScheduleDatabase.getInstance(application).scheduleDatabaseDao
         val viewModelFactory = AddViewModelFactory(sdataSource)
 
+        activity?.actionBar?.hide()
+
         // Get a reference to the ViewModel associated with this fragment.
         addViewModel =
                 ViewModelProvider(
                         this, viewModelFactory).get(AddViewModel::class.java)
+
+        addViewModel.saved.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it == true) {
+                activity?.onBackPressed()
+                addViewModel.saved.value = false
+
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+
+            }
+
+        })
+
 
         // To use the View Model with data binding, you have to explicitly
         // give the binding object a reference to it.
@@ -294,7 +314,5 @@ class AddFragment : Fragment() {
         popup.show()
 
     }
-
-
 
 }
