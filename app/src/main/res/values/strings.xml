@@ -11,5 +11,6 @@
     <string name="add_valid_name_and_price">이름과 치료비 정보를 반드시 입력해 주세요!</string>
 
     <string name="calendar_topappbar_add">추가</string>
+    <string name="calendar_topappbar_temp">임시</string>
 
 </resources>

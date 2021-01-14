@@ -23,4 +23,9 @@
       android:title="@string/calendar_topappbar_add"
       app:showAsAction="always" />
 
+  <item
+      android:id="@+id/item_temp"
+      android:title="@string/calendar_topappbar_temp"
+      app:showAsAction="always" />
+
 </menu>

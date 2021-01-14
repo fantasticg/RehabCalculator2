@@ -15,6 +15,7 @@ import com.example.rehabcalculator2.MainActivity
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentCalendarBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -23,7 +24,6 @@ class CalendarFragment : Fragment() {
     private lateinit var calendarViewModel: CalendarViewModel
 
     lateinit var calendarAdapter: CalendarAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -46,7 +46,7 @@ class CalendarFragment : Fragment() {
 
         val viewModelFactory = CalendarViewModelFactory(sdataSource)
 
-        val calendarViewModel =
+        calendarViewModel =
                 ViewModelProvider(
                         this, viewModelFactory).get(CalendarViewModel::class.java)
 
@@ -106,6 +106,19 @@ class CalendarFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.item_add) {
             activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_add)
+        }
+
+        if(item.itemId == R.id.item_temp) {
+/*
+            val list = calendarViewModel.getNames()
+
+            Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    list.toString(),
+                    Snackbar.LENGTH_SHORT // How long to display the message.
+            ).show()
+
+ */
         }
         return super.onOptionsItemSelected(item)
     }

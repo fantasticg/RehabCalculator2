@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rehabcalculator2.App
+import com.example.rehabcalculator2.database.CostByTherapist
 import com.example.rehabcalculator2.database.OnetimeSchedule
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
 import kotlinx.coroutines.*
@@ -145,6 +146,13 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
         //Log.d("hkyeom555", "final :" + schedulesMap!!.toString())
     }
 
+    /*
+    fun getNames() : ArrayList<CostByTherapist> = runBlocking {
+        sdataSource.get_count_by_name() as ArrayList
+    }
+
+     */
+
     private fun initMap(schedule: OnetimeSchedule) {
         val calendar = Calendar.getInstance()
         calendar.time = schedule.startTime
@@ -179,5 +187,6 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
         for (i in 1..nextMonthHeadOffset) data.add(date++)
     }
+
 
 }
