@@ -144,8 +144,7 @@ class CalendarFragment : Fragment() {
                 cal.set(Calendar.MONTH, month)
                 cal.set(Calendar.DATE, date)
 
-
-                (activity as AppCompatActivity).supportActionBar?.title = year.toString() + "-" + (month + 1).toString() + "-" + date.toString()
+                (activity as AppCompatActivity).supportActionBar?.title = calendarViewModel.title_format.format(cal.time)
 
                 //기준 달 변경.
                 calendarViewModel.viewModelScope.launch {
