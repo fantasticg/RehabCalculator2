@@ -3,7 +3,6 @@ package com.example.rehabcalculator2.ui.calendar
 import android.util.ArrayMap
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.rehabcalculator2.App
 import com.example.rehabcalculator2.database.CostByTherapist
 import com.example.rehabcalculator2.database.OnetimeSchedule
@@ -20,7 +19,7 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
     var LOW_OF_CALENDAR = 0
 
     //현재 달력에 보여줄 기준달
-    val current_calendar = Calendar.getInstance()
+    lateinit var base_calendar : Calendar
 
     // 달력을 일요일부터 보여주도록 할 때 이번달의 1일이 무슨요일이냐에 따라
     // 왼쪽에 빈공간을 저번달의 막주 정보가 보이도록 한다.
@@ -47,26 +46,27 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
     val title_format: DateFormat = SimpleDateFormat("YYYY.MM")
 
+
     init {
-        current_calendar.time = Date()
-        Log.d("hkyeom111", "init")
+        base_calendar = Calendar.getInstance()
     }
 
     fun makeMonthDate() = runBlocking {
 
         data.clear()
+        dataKey.clear()
 
-        current_calendar.set(Calendar.DATE, 1)
+        base_calendar.set(Calendar.DATE, 1)
 
-        currentMonthMaxDate = current_calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        currentMonthMaxDate = base_calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        prevMonthTailOffset = current_calendar.get(Calendar.DAY_OF_WEEK) - 1
+        prevMonthTailOffset = base_calendar.get(Calendar.DAY_OF_WEEK) - 1
 
-        currentTitle = title_format.format(current_calendar.time)
+        currentTitle = title_format.format(base_calendar.time)
 
-        makePrevMonthTail(current_calendar.clone() as Calendar)
+        makePrevMonthTail(base_calendar.clone() as Calendar)
 
-        makeCurrentMonth(current_calendar)
+        makeCurrentMonth(base_calendar)
 
         LOW_OF_CALENDAR =6
         if((LOW_OF_CALENDAR*7 - (prevMonthTailOffset + currentMonthMaxDate)) >= 7)
@@ -78,12 +78,12 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
         makeNextMonthHead()
 
-        val fromCalendar = current_calendar.clone() as Calendar
+        val fromCalendar = base_calendar.clone() as Calendar
         fromCalendar.add(Calendar.MONTH, -1)
         fromCalendar.set(Calendar.DATE, data[0])
         val from = fromCalendar.time
 
-        val toCalendar = current_calendar.clone() as Calendar
+        val toCalendar = base_calendar.clone() as Calendar
         toCalendar.add(Calendar.MONTH, 1)
         toCalendar.set(Calendar.DATE, data[data.lastIndex])
         val to = toCalendar.time
@@ -108,7 +108,9 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
 
         // 2. ps -> os변환후 맵 초기화
-        val list = sdataSource.findPeriodicSchedulesBetweenDates(from, to) as ArrayList<OnetimeSchedule>
+        //val list = sdataSource.findPeriodicSchedulesBetweenDates(from, to) as ArrayList<OnetimeSchedule>
+
+        val list = sdataSource.findPeriodicSchedulesBetweenDates(to) as ArrayList<OnetimeSchedule>
         for (i in list) {
 
             val startDay = Calendar.getInstance()
@@ -142,16 +144,18 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
         }
 
+
+
         //Log.d("hkyeom555", "final :" + schedulesMap!!.toString())
     }
 
     fun getNames() : ArrayList<CostByTherapist> = runBlocking {
 
-        val fromCalendar = current_calendar.clone() as Calendar
+        val fromCalendar = base_calendar.clone() as Calendar
         fromCalendar.set(Calendar.DATE, 1)
         val from = fromCalendar.time
 
-        val toCalendar = current_calendar.clone() as Calendar
+        val toCalendar = base_calendar.clone() as Calendar
         toCalendar.set(Calendar.DATE, currentMonthMaxDate)
         val to = toCalendar.time
 

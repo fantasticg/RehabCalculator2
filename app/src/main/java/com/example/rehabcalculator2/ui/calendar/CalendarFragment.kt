@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,11 +13,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.rehabcalculator2.MainActivity
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentCalendarBinding
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -28,9 +27,20 @@ class CalendarFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
-        activity?.actionBar?.hide()
         super.onCreate(savedInstanceState)
+
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = calendarViewModel.currentTitle
+
+
+    }
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -58,14 +68,12 @@ class CalendarFragment : Fragment() {
         val manager = GridLayoutManager(context, calendarViewModel.DAYS_OF_WEEK)
         binding.calendarView.layoutManager = manager
 
-        val adapter = CalendarAdapter(sdataSource, calendarViewModel)
+        calendarAdapter = CalendarAdapter(sdataSource, calendarViewModel)
 
-        binding.calendarView.adapter = adapter
+        binding.calendarView.adapter = calendarAdapter
 
         binding.calendarView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         binding.calendarView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-
-        activity?.actionBar?.title = calendarViewModel.currentTitle
 
         /*
         binding.toolbar.setOnClickListener() {
@@ -125,6 +133,31 @@ class CalendarFragment : Fragment() {
 
 
         }
+
+        if(item.itemId == android.R.id.home) {
+
+            val cal = calendarViewModel.base_calendar
+
+            val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, date ->
+
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
+                cal.set(Calendar.DATE, date)
+
+
+                (activity as AppCompatActivity).supportActionBar?.title = year.toString() + "-" + (month + 1).toString() + "-" + date.toString()
+
+                //기준 달 변경.
+                calendarViewModel.viewModelScope.launch {
+                    calendarViewModel.makeMonthDate()
+                }
+                calendarAdapter.notifyDataSetChanged()
+
+            }
+
+            DatePickerDialog(context as Context, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
         return super.onOptionsItemSelected(item)
     }
 

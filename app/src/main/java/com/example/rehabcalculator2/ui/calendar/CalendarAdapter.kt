@@ -51,6 +51,10 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
 
                                 } else {
                                         holder.tv_date.alpha = 1f
+                                        holder.tv_sc1.alpha = 1f
+                                        holder.tv_sc2.alpha = 1f
+                                        holder.tv_sc3.alpha = 1f
+                                        holder.tv_count.alpha = 1f
                                 }
                                 holder.tv_date.text = viewModel.data[position].toString()
 

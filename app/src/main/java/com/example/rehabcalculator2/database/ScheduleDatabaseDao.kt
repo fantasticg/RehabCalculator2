@@ -18,9 +18,15 @@ interface ScheduleDatabaseDao {
     @Query("SELECT * FROM schedules_table")
     suspend fun getAllSchedules(): List<OnetimeSchedule>
 
+    /*
     //고정 스케줄 얻어오기
     @Query("SELECT * FROM schedules_table WHERE start_time BETWEEN :from AND :to AND day_of_weeks >= 0")
     suspend fun findPeriodicSchedulesBetweenDates(from: Date, to: Date): List<OnetimeSchedule>
+     */
+
+    @Query("SELECT * FROM schedules_table WHERE start_time < :to AND day_of_weeks >= 0")
+    suspend fun findPeriodicSchedulesBetweenDates(to: Date): List<OnetimeSchedule>
+
 
     //일일 스케줄 얻어오기
     @Query("SELECT * FROM schedules_table WHERE start_time BETWEEN :from AND :to AND day_of_weeks < 0")
