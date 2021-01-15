@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -109,16 +110,20 @@ class CalendarFragment : Fragment() {
         }
 
         if(item.itemId == R.id.item_temp) {
-/*
             val list = calendarViewModel.getNames()
+            var toast : String = ""
+            var total : Int = 0
 
-            Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    list.toString(),
-                    Snackbar.LENGTH_SHORT // How long to display the message.
-            ).show()
+            for(i in list) {
+                toast = toast + i.name + " : " + (i.sum_of_price + i.monthly_fee) + "\n";
+                total = total + (i.sum_of_price + i.monthly_fee)
+            }
 
- */
+            toast = toast + "total : " + total
+
+            Toast.makeText(context, toast, Toast.LENGTH_LONG).show()
+
+
         }
         return super.onOptionsItemSelected(item)
     }

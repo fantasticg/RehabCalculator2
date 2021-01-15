@@ -104,8 +104,7 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
             initMap(i)
         }
 
-
-        //Log.d("hkyeom111", "os :")// + schedulesMap!!.toString())
+        Log.d("hkyeom111", "os :" + schedulesMap!!.toString())
 
 
         // 2. ps -> os변환후 맵 초기화
@@ -126,7 +125,7 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
                 endCal.set(startDay.get(Calendar.YEAR), startDay.get(Calendar.MONTH), startDay.get(Calendar.DATE))
 
-                val onetime_s = OnetimeSchedule(App.prefs.pref_databaseId++, i.therapistId, i.name, -1, startDay.time, endCal.time, i.price, -1, i.numberOfConsecutiveLectures)
+                val onetime_s = OnetimeSchedule(App.prefs.pref_databaseId++, i.therapistId, i.name, -1, startDay.time, endCal.time, i.price, i.monthlyFee, i.numberOfConsecutiveLectures)
                 initMap(onetime_s)
 
                 sdataSource.insert(onetime_s)
@@ -146,12 +145,19 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
         //Log.d("hkyeom555", "final :" + schedulesMap!!.toString())
     }
 
-    /*
     fun getNames() : ArrayList<CostByTherapist> = runBlocking {
-        sdataSource.get_count_by_name() as ArrayList
+
+        val fromCalendar = current_calendar.clone() as Calendar
+        fromCalendar.set(Calendar.DATE, 1)
+        val from = fromCalendar.time
+
+        val toCalendar = current_calendar.clone() as Calendar
+        toCalendar.set(Calendar.DATE, currentMonthMaxDate)
+        val to = toCalendar.time
+
+        sdataSource.get_count_by_name(from, to) as ArrayList
     }
 
-     */
 
     private fun initMap(schedule: OnetimeSchedule) {
         val calendar = Calendar.getInstance()

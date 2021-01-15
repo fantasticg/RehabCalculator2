@@ -18,20 +18,17 @@ package com.example.rehabcalculator2.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.util.*
 
-@Entity(tableName = "schedules_table")
+@Entity
 data class CostByTherapist(
 
-    @ColumnInfo(name = "therapist_name")            // 치료사 이름
-    var name: String = "a",
+    @ColumnInfo(name = "therapist_name")
+    var name: String,
 
-    @ColumnInfo(name = "sum_of_price")                     // 회당 비용
-    var price: Int,
+    @ColumnInfo(name = "SUM(price)")
+    var sum_of_price: Int,
 
-    @ColumnInfo(name = "monthly_fee")               // 월회비
-    var monthlyFee: Int
-
+    @ColumnInfo(name = "monthly_fee")
+    var monthly_fee: Int
 
 )
