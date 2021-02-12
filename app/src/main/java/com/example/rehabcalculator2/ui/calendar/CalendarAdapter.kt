@@ -3,18 +3,17 @@ package com.example.rehabcalculator2.ui.calendar
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rehabcalculator2.database.OnetimeSchedule
 import com.example.rehabcalculator2.database.ScheduleDatabaseDao
 import com.example.rehabcalculator2.databinding.ListItemScheduleBinding
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase : ScheduleDatabaseDao, val viewModel : CalendarViewModel) :
+class CalendarAdapter(val sdatabase : ScheduleDatabaseDao, val viewModel : CalendarViewModel) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(/* DayCallback() */) {
-
+        var itemClick : ItemClick? = null
         init {
                 viewModel.viewModelScope.launch {
                         viewModel.makeMonthDate()
@@ -28,8 +27,15 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+
+
                 when(holder) {
                         is ViewHolder -> {
+
+                                if(itemClick != null) {
+                                        holder?.itemView?.setOnClickListener { v -> itemClick?.onClick(v, position)}
+                                }
 
                                 if(position == 0 ) {
                                         Log.d("hkyeom111", "onBindViewHolder")
@@ -93,17 +99,9 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
                 val tv_sc2 = binding.tvSc2
                 val tv_sc3 = binding.tvSc3
                 val tv_count = binding.tvCount
-
-
-                fun bind(item: OnetimeSchedule) {
-                        binding.schedule = item
-                        binding.executePendingBindings()
-                }
-
+                var date : Long = 0L
                 companion object {
                         fun from(parent: ViewGroup): ViewHolder {
-
-                                //val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_schedule, parent, false)
 
                                 val layoutInflater = LayoutInflater.from(parent.context)
                                 val binding = ListItemScheduleBinding.inflate(layoutInflater, parent, false)
@@ -114,6 +112,9 @@ class CalendarAdapter(/*val clickListener: SleepNightListener, */ val sdatabase 
         }
 
 
+        interface ItemClick {
+                fun onClick(view: View, position: Int)
+        }
 
 }
 /*

@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.rehabcalculator2.MainActivity
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentCalendarBinding
@@ -58,8 +59,10 @@ class CalendarFragment : Fragment() {
         val viewModelFactory = CalendarViewModelFactory(sdataSource)
 
         calendarViewModel =
-                ViewModelProvider(
-                        this, viewModelFactory).get(CalendarViewModel::class.java)
+                activity?.let {
+                    ViewModelProvider(
+                            it, viewModelFactory).get(CalendarViewModel::class.java)
+                }!!
 
         binding.calendarViewModel = calendarViewModel
 
@@ -69,6 +72,14 @@ class CalendarFragment : Fragment() {
         binding.calendarView.layoutManager = manager
 
         calendarAdapter = CalendarAdapter(sdataSource, calendarViewModel)
+        calendarAdapter.itemClick = object: CalendarAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                //dayFragment 호출!!
+                calendarViewModel.clickedDayKey = calendarViewModel.dataKey[position]
+                activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_day)
+            }
+        }
+
 
         binding.calendarView.adapter = calendarAdapter
 
@@ -114,6 +125,7 @@ class CalendarFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.item_add) {
+            calendarViewModel.clickedDaySchedule = null
             activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_add)
         }
 

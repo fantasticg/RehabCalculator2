@@ -38,13 +38,19 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
     //그리드뷰에 그려줄 날의 숫자.
     val data = arrayListOf<Int>()
 
-    val dataKey = arrayListOf<String>()
+    var dataKey = arrayListOf<String>()
 
     var schedulesMap : ArrayMap<String, ArrayList<OnetimeSchedule>>? = null
 
     val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     val title_format: DateFormat = SimpleDateFormat("YYYY.MM")
+
+    var clickedDayKey : String? = null
+
+    var clickedDaySchedule : OnetimeSchedule? = null
+
+    val day_format: DateFormat = SimpleDateFormat("HH:mm")
 
 
     init {
@@ -196,6 +202,10 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
         var date = 1
 
         for (i in 1..nextMonthHeadOffset) data.add(date++)
+    }
+
+    fun getDayFormat(date : Date?): String {
+        return day_format.format(date)
     }
 
 

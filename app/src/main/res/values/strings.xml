@@ -3,6 +3,8 @@
     <string name="title_calendar">Calendar</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_add">Add</string>
+    <string name="title_day">DayCalendar</string>
 
     <string name="menu_connections_one">연결없음</string>
     <string name="menu_connections_two">2타임</string>

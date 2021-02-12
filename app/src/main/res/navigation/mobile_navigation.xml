@@ -30,7 +30,14 @@
     <fragment
         android:id="@+id/navigation_add"
         android:name="com.example.rehabcalculator2.ui.add.AddFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_add"
+        tools:layout="@layout/fragment_add" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_day"
+        android:name="com.example.rehabcalculator2.ui.calendar.DayFragment"
+        android:label="@string/title_day"
         tools:layout="@layout/fragment_add" >
     </fragment>
 

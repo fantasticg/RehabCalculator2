@@ -14,16 +14,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.calendar.CalendarFragment">
+        tools:context=".ui.calendar.DayFragment">
 
-        <!-- prev, curr_month, next -->
-        <!-- 일..토 -->
+        <TextView
+            android:id="@+id/day_timestamp"
+            android:text="2.4.목요일"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendar_view"
-            android:layout_width="0dp"
+            android:id="@+id/day_view"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/day_timestamp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
