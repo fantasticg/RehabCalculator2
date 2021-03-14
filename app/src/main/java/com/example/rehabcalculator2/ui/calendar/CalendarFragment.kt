@@ -13,7 +13,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.rehabcalculator2.MainActivity
 import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentCalendarBinding
@@ -86,34 +85,7 @@ class CalendarFragment : Fragment() {
         binding.calendarView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         binding.calendarView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
-        /*
-        binding.toolbar.setOnClickListener() {
-            //PickerUtils.openDatePicker(context as Context, it as androidx.appcompat.widget.Toolbar, calendarViewModel.current_calendar)
-
-            val cal = calendarViewModel.current_calendar
-
-            val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, date ->
-
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, month)
-                cal.set(Calendar.DATE, date)
-
-                binding.toolbar.title = year.toString() + "-" + (month + 1).toString() + "-" + date.toString()
-
-                //기준 달 변경.
-                calendarViewModel.viewModelScope.launch {
-                    calendarViewModel.makeMonthDate()
-                }
-                adapter.notifyDataSetChanged()
-
-            }
-
-            DatePickerDialog(context as Context, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
-
-        }
-
-         */
-
+        (activity as AppCompatActivity).supportActionBar?.show()
 
         return binding.root
     }
@@ -126,6 +98,7 @@ class CalendarFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.item_add) {
             calendarViewModel.clickedDaySchedule.value = null
+            (activity as AppCompatActivity).supportActionBar?.hide()
             activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_add)
         }
 

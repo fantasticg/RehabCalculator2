@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -62,8 +63,6 @@ class AddFragment : Fragment() {
         // Create an instance of the ViewModel Factory.
         val sdataSource = ScheduleDatabase.getInstance(application).scheduleDatabaseDao
         val viewModelFactory = AddViewModelFactory(sdataSource)
-
-        activity?.actionBar?.hide()
 
         // Get a reference to the ViewModel associated with this fragment.
         addViewModel =
@@ -201,22 +200,6 @@ class AddFragment : Fragment() {
             openConnectionsPopupMenu(it as Button)
         }
 
-
-/*
-
-        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
-        addViewModel.navigateToSleepTracker.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state is true.
-                this.findNavController().navigate(
-                        //SleepDetailFragmentDirections.actionSleepDetailFragmentToSleepTrackerFragment())
-                // Reset state to make sure we only navigate once, even if the device
-                // has a configuration change.
-                //sleepDetailViewModel.doneNavigating()
-            }
-        })
-
-         */
-
         return binding.root
     }
 
@@ -251,26 +234,6 @@ class AddFragment : Fragment() {
 
         TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false).show()
     }
-
-    /*
-    fun openDatePicker(button : Button, cal : Calendar) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, date ->
-
-            addViewModel.onetimeStartCal.set(Calendar.YEAR, year)
-            addViewModel.onetimeStartCal.set(Calendar.MONTH, month)
-            addViewModel.onetimeStartCal.set(Calendar.DATE, date)
-
-            addViewModel.onetimeEndCal.set(Calendar.YEAR, year)
-            addViewModel.onetimeEndCal.set(Calendar.MONTH, month)
-            addViewModel.onetimeEndCal.set(Calendar.DATE, date)
-
-            button.text = year.toString()+"-"+(month+1).toString()+"-"+date.toString()
-        }
-
-        DatePickerDialog(requireContext(), dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
-    }
-
-     */
 
     fun openConnectionsPopupMenu(button: Button) {
         val popup = PopupMenu(context, button)
