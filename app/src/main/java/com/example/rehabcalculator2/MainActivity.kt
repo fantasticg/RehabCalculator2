@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_calendar, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_add))
+                R.id.navigation_tcalendar, R.id.navigation_tcost_calculation, R.id.navigation_tcall, R.id.navigation_add))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.rehabcalculator2.ui.add
+package com.example.rehabcalculator2.ui.edit
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -33,6 +33,8 @@ import com.example.rehabcalculator2.R
 import com.example.rehabcalculator2.database.ScheduleDatabase
 import com.example.rehabcalculator2.databinding.FragmentAddBinding
 import com.example.rehabcalculator2.ui.PickerUtils
+import com.example.rehabcalculator2.ui.add.AddViewModel
+import com.example.rehabcalculator2.ui.add.AddViewModelFactory
 import java.util.*
 
 
@@ -45,7 +47,7 @@ import java.util.*
  * create an instance of this fragment.
  *
  */
-class AddFragment : Fragment() {
+class EditFragment : Fragment() {
 
     private lateinit var addViewModel : AddViewModel
 

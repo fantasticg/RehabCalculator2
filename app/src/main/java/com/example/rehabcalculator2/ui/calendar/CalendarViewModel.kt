@@ -2,6 +2,8 @@ package com.example.rehabcalculator2.ui.calendar
 
 import android.util.ArrayMap
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.rehabcalculator2.App
 import com.example.rehabcalculator2.database.CostByTherapist
@@ -48,10 +50,9 @@ class CalendarViewModel(private val sdataSource: ScheduleDatabaseDao) : ViewMode
 
     var clickedDayKey : String? = null
 
-    var clickedDaySchedule : OnetimeSchedule? = null
+    var clickedDaySchedule = MutableLiveData<OnetimeSchedule?>()
 
     val day_format: DateFormat = SimpleDateFormat("HH:mm")
-
 
     init {
         base_calendar = Calendar.getInstance()

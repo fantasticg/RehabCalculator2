@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">RehabCalculator2</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_tcalendar">치료 달력</string>
+    <string name="title_tcost_calculation">치료비 계산</string>
+    <string name="title_tcall">콜치료</string>
     <string name="title_add">Add</string>
+    <string name="title_edit">Edit</string>
     <string name="title_day">DayCalendar</string>
 
     <string name="menu_connections_one">연결없음</string>

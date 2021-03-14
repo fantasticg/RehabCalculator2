@@ -53,7 +53,7 @@ class DayFragment : Fragment() {
         dayAdapter.itemClick = object: DayAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 //edit
-                calendarViewModel.clickedDaySchedule = calendarViewModel.schedulesMap!!.get(calendarViewModel.clickedDayKey)!![position]
+                calendarViewModel.clickedDaySchedule.value = calendarViewModel.schedulesMap!!.get(calendarViewModel.clickedDayKey)!![position]
                 activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_add)
             }
         }

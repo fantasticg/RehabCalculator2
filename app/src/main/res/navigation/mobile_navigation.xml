@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_calendar">
+    app:startDestination="@+id/navigation_tcalendar">
 
     <fragment
-        android:id="@+id/navigation_calendar"
+        android:id="@+id/navigation_tcalendar"
         android:name="com.example.rehabcalculator2.ui.calendar.CalendarFragment"
-        android:label="@string/title_calendar"
+        android:label="@string/title_tcalendar"
         tools:layout="@layout/fragment_calendar" >
     </fragment>
 
@@ -32,6 +32,13 @@
         android:name="com.example.rehabcalculator2.ui.add.AddFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit"
+        android:name="com.example.rehabcalculator2.ui.edit.EditFragment"
+        android:label="@string/title_edit"
+        tools:layout="@layout/fragment_edit" >
     </fragment>
 
     <fragment

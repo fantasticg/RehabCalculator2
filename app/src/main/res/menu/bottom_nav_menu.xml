@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_calendar"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_calendar" />
+        android:id="@+id/navigation_tcalendar"
+        android:icon="@drawable/ic_launcher_calendar_today_24"
+        android:title="@string/title_tcalendar" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_tcost_calculation"
+        android:icon="@drawable/ic_baseline_receipt_long_24"
+        android:title="@string/title_tcost_calculation" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_tcall"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:title="@string/title_tcall" />
 
 </menu>

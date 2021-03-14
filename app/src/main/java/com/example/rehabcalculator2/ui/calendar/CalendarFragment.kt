@@ -125,7 +125,7 @@ class CalendarFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.item_add) {
-            calendarViewModel.clickedDaySchedule = null
+            calendarViewModel.clickedDaySchedule.value = null
             activity?.findNavController(R.id.nav_host_fragment)?.navigate(R.id.navigation_add)
         }
 
